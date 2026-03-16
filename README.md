@@ -1,4 +1,6 @@
-# linux_script_2024
+# linux_script
+
+Last update: 2026
 
 # Before to begin
 
