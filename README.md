@@ -4,10 +4,20 @@ Last update: 2026
 
 # Before to begin
 
+## About exercises
+
 - Be sure you repect filename and result
 - Try a command in the terminal first to avoid side effects
 - Go step by step, try little pece of code first. As your program grow, complexity increase
 - Use samples to test your program
+
+## About Git
+
+INstall GIt : https://git-scm.com/install/linux
+Configure Git : https://git-scm.com/book/fr/v2/D%C3%A9marrage-rapide-Param%C3%A9trage-%C3%A0-la-premi%C3%A8re-utilisation-de-Git
+
+git config --global user.name "John Doe"
+git config --global user.email johndoe@example.com
 
 # Practice - Parameter and math
 
