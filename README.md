@@ -51,6 +51,8 @@ echo $2 //parameter 2
 
 10th parameter and more needs different syntax: ${14}
 
+It's also possible to give a name on each parameter. Goal is to allow optional parameter, allow mixing order. See "getOps" tools to do that (you probably need to understand other concepts like loops and while instructions explain later in this page) : 
+https://www.windmill.dev/blog/bash-scripts-arguments 
 
 « bc » command allow you to make a string a math expression. bc can take a value in input from another command. To do that, you can use | (pipe). The pipe connect to command:
 
@@ -275,8 +277,9 @@ Total                     |   1279.10
 
 > Pull Request
 
-# Final practices
+# Final practices - Games
 
+You choose one game among the following ones. One important thing is think about the structure : make small script that communicate together 
 Create a directory run2 in your login directory
 
 Develop a game. Either:
@@ -331,7 +334,7 @@ Tips: regular expression could be useful
 9. Display the top 10
 
 
-# Simon (Run4)
+## Simon (Run4)
 
 1. Nb Users
 2. Computer display a letter betwwen Q S D or F (e.g Q)
@@ -348,6 +351,7 @@ Tips: regular expression could be useful
   
 9. Display the top 10
 
+https://misterprepa.net/comprendre-dilemme-prisonnier/
 
 # Resolve expression (Run 5)
 
@@ -355,3 +359,8 @@ The program get an expression in input and resolve
 
 - understand () []  = (priority)
 - [ 2 * (1 + 1)] * 3 = 12
+
+
+https://medium.com/@redfanatic7/guide-to-reverse-shell-between-two-linux-machines-d2bae31a714e
+
+
