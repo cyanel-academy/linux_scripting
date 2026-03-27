@@ -1,0 +1,13 @@
+CHIPS	|      4.99
+SHAMPOO	|     16.99
+SHAMPOO	|     16.99
+SHAMPOO	|     16.99
+SHAMPOO	|      0.00
+SHAMPOO	|      0.00
+SHAMPOO	|     16.99
+CHIPS	|     11.58
+CHIPS	|     11.58
+CHIPS	|     11.00
+CHIPS	|     11.00
+CAMERA	|    253.99
+CAMERA2	|    299.99
