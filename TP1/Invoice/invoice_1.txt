@@ -1,3 +1,0 @@
-COCO	(unknown)	|      0.00
-COCO	(unknown)	|      4.99
-GUITAR	(unknown)	|    298.99
