@@ -1,0 +1,5 @@
+UKULELE (strings) | 9.00
+PIANO (percussion) | 1220.10
+FLUTE (unknown) | 50.00
+-------------------------------------------
+Total | 1279.10
