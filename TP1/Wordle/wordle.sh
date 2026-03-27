@@ -7,12 +7,15 @@ RESET="\e[0m"
 word_to_guess=$(shuf -n 1 word.txt) # get one random word in the word.txt file
 word_found=0
 tries=5
+filename="scores.txt"
 
 printf -- "${GREEN}\n------------------------\n"
 printf "\tWORDLE!\n"
 printf -- "------------------------\n\n${RESET}"
 
-printf "${RED}Guess the 5 letter word !\n\n${RESET}"
+username=$(./get_username.sh)
+
+printf "\n${RED}Guess the 5 letter word !\n\n${RESET}"
 
 while [[ $tries -ne 0 && $word_found -ne 1 ]]; do
     ./get_word_user_to_check.sh $word_to_guess
@@ -32,12 +35,14 @@ if [[ word_found -ne 1 ]]; then
     printf "NO MORE TRIES !\n" $word_to_guess
     printf "THE WORD WAS %s !\n" $word_to_guess
     printf -- "-----------------\n\n"
+    
 else
+    ./save_score_username.sh "$username"
     printf -- "\n------------------------\n"
     printf "YOU FOUND THE WORD (%s)!\n" $word_to_guess
     printf -- "------------------------\n\n"
 fi
 
-./play_again.sh
+./play_again.sh "$filename"
 
 exit 0
