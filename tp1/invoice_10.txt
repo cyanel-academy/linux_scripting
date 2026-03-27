@@ -1,0 +1,5 @@
+BANANA    (unknown      ) |     20,00
+APPLE     (unknown      ) |      5,00
+COCA-COLA (unknown      ) |     20,00
+--------------------------------------
+Total                     |     45,00
