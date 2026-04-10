@@ -14,12 +14,12 @@ show_top10() {
 }
 
 # nombre de joueurs ?
-read -p "Bienvenue dan "SIMON". Combien de joueurs ? " nb_players
+read -p "Bienvenue dans "SIMON". Combien de joueurs ? " nb_players
 
 for (( i=1; i<=nb_players; i++ ))
 do
     read -p "Pseudo du joueur $i : " player_name
-    echo " Dear $player_name... Le jeu va commencer..."
+    echo " Dear #$player_name, le jeu va commencer..."
     sleep 1
 
     sequence=""
