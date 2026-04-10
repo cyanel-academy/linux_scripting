@@ -4,10 +4,16 @@ GREEN="\e[32m"
 RED="\e[31m"
 RESET="\e[0m"
 
-word_to_guess=$(shuf -n 1 word.txt) # get one random word in the word.txt file
 word_found=0
 tries=5
 filename="scores.txt"
+word_filename="word.txt"
+
+# get the random word from the file
+num_words=$(wc -l < "$word_filename")
+chosen_word_num=$(( 1 + RANDOM % $num_words ))
+
+word_to_guess=$(sed -n "${chosen_word_num}p" "$word_filename")
 
 printf -- "${GREEN}\n------------------------\n"
 printf "\tWORDLE!\n"
@@ -31,10 +37,10 @@ while [[ $tries -ne 0 && $word_found -ne 1 ]]; do
 done
 
 if [[ word_found -ne 1 ]]; then
-    printf -- "\n-----------------\n"
-    printf "NO MORE TRIES !\n" $word_to_guess
+    printf -- "\n----------------------\n"
+    printf "NO MORE TRIES !\n"
     printf "THE WORD WAS %s !\n" $word_to_guess
-    printf -- "-----------------\n\n"
+    printf -- "----------------------\n\n"
     
 else
     ./save_score_username.sh "$username"
