@@ -7,8 +7,8 @@ filename="scores.txt"
 # if the file doesn't exist, create it
 touch "$filename"
 
-# get the current score of the player (-P to be able to put \t)
-current_score=$(grep -P "^${username}\t" "$filename" | cut -f2)
+# get the current score of the player
+current_score=$(grep "^${username}" "$filename" | cut -f2)
 
 # if current_score has a number, the player exists (we change the number of wins), else, it's a new player
 if [ -n "$current_score" ]; then
