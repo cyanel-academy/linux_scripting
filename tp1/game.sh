@@ -103,9 +103,9 @@ for round in {1..5}; do
         ELAPSED=$(( SECONDS - START_TIME ))
         REMAINING=$(( 120 - ELAPSED ))
         
-        if [[ $REMAINING -le 90 && $N90 -eq 0 ]]; then echo -e "\r\033[K⏳ \033[33mRappel : Il reste 90 secondes.\033[0m"; N90=1; fi
-        if [[ $REMAINING -le 60 && $N60 -eq 0 ]]; then echo -e "\r\033[K⏳ \033[33mRappel : Il reste 60 secondes.\033[0m"; N60=1; fi
-        if [[ $REMAINING -le 30 && $N30 -eq 0 ]]; then echo -e "\r\033[K⏳ \033[31mRappel : Il reste 30 secondes !\033[0m"; N30=1; fi
+        if [[ $REMAINING -le 90 && $N90 -eq 0 ]]; then echo -e "\r\033[K \033[33mRappel : Il reste 90 secondes.\033[0m"; N90=1; fi
+        if [[ $REMAINING -le 60 && $N60 -eq 0 ]]; then echo -e "\r\033[K \033[33mRappel : Il reste 60 secondes.\033[0m"; N60=1; fi
+        if [[ $REMAINING -le 30 && $N30 -eq 0 ]]; then echo -e "\r\033[K \033[31mRappel : Il reste 30 secondes !\033[0m"; N30=1; fi
         if [[ $REMAINING -le 10 && $REMAINING -gt 0 && $N10 -ne $REMAINING ]]; then 
             echo -e "\r\033[K\033[31m$REMAINING...\033[0m"; N10=$REMAINING
         fi
