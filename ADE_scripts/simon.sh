@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 if [ "$#" -ne 0 ]; then 
 	echo "No parameters needed for this command. Usage ./simon.sh"
@@ -9,7 +9,7 @@ fi
 echo "Hi ! WELCOME to Simon game... First, what's your name ?"
 read player_name
 
-echo "\nThanks ! LET'S BEGIN :) (press anything to begin)"
+echo -e "\nThanks ! LET'S BEGIN :) (press anything to begin)" # -e pour prendre en compte les caractères d'échappement
 read user_entry
 clear
 
@@ -24,13 +24,14 @@ sequence_to_display=""
 while [ $egal = 1 ]; do
 
     #On va choisir un nombre au hasard entre 1 et 4, pour aller piocher la Xè lettre dans la liste
-    numero=$(shuf -i 1-4 -n 1) # shuf est comme un random, mais en sh
+    #numero=$(shuf -i 1-4 -n 1) # shuf est comme un random, mais en sh
+    numero=$(( (RANDOM % 4) + 1 )) # génère un nombre entre 0 et 3 et décale de 1 pour avoir entre 1 et 4
     #en input on dit les chiffres entre 1 et 4 et on veut en sortie 1 seul chiffre
 
     letter_to_add=$(echo "$liste_de_lettres" | cut -c "$numero")
     sequence_to_display="$sequence_to_display$letter_to_add"
 
-    echo "REMEMBER the sequence !\n$sequence_to_display"
+    echo -e "REMEMBER the sequence !\n$sequence_to_display"
     sleep 2
     clear
     echo "YOUR TURN ! Repeat the sequence :"
@@ -42,7 +43,7 @@ while [ $egal = 1 ]; do
         egal=0
     else
         score=$(echo "$score + 1" | bc)
-        echo "Good ! +1\nLet's make another round !"
+        echo -e "Good ! +1\nLet's make another round !"
         sleep 1
         clear
     fi
@@ -67,6 +68,6 @@ sort -k2,2 -k1,1rn "$file_scores" | sort -u -k2,2 | sort -rn > "$tmp_file"
 head -n 10 "$tmp_file" > "$file_scores"
 rm "$tmp_file"
 
-echo "\n--- TOP 10 HIGH SCORES ---"
+echo -e "\n--- TOP 10 HIGH SCORES ---"
 cat "$file_scores"
 
