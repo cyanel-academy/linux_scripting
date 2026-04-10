@@ -1,5 +1,6 @@
 10 Amelie
 9 Ame_bis
+9 Amé
 7 Amelay
 5 Ame
 3 Patrice
@@ -7,4 +8,3 @@
 0 Toto
 0 Soso
 0 Fafa
-0 Didi
