@@ -1,0 +1,7 @@
+WALID 2
+AMINE 2
+Amine 1
+AMINE 0
+Amine 0
+Amine 0
+Amine 0

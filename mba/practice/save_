@@ -1,0 +1,24 @@
+#!/bin/bash
+while getopts "n:p:f:" opt; do
+case $opt in
+n) nom=$(echo "$OPTARG" | TR '[:LOWER:]' '[:UPPER:]') ;;
+p) prix=$OPTARG ;;
+f) nom_fichier=$OPTARG ;;
+_?) echo "option invalide"; exit 1 ;;
+ esac
+done
+if [ ! -f "$nom_fichier" ]; then
+echo "Error: File '$nom_fichier' does not exist."
+exit 1
+fi
+if [[ ! $prix =~ ^[0-9]+$ ]];then
+echo "Error: Price '$prix' must be an integer."
+exit 1
+fi
+if  printf "%-15s |  %10.2f\n" "$nom" "$prix">> "$nom_fichier"2>/dev/null;then
+echo "Order inserted"
+exit 0
+else
+echo "An error occurred while saving"
+exit 1
+fi
