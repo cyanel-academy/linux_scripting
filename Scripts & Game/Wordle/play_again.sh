@@ -9,7 +9,7 @@ read user_input
 case "$user_input" in
     yes|y)
         #printf -- "----- NEW GAME -----\n"
-        ./wordle.sh
+        exit 0	# the code to indicate that the game continues
         ;;
     no|n)
         printf -- "\n----- END OF GAME -----\n\n" # -- to say no option and let the - in the printf
@@ -33,4 +33,4 @@ case "$user_input" in
         ;;
 esac
 
-exit 0
+exit 1		# the code to indicate that the game ends
