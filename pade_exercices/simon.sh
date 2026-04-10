@@ -2,6 +2,16 @@
 
 SCORE_FILE="scores_simon.txt"
 
+#KEYS="QSDF"  
+#NB_KEYS=${#KEYS} 
+#TOP_LIMIT=10  
+
+SLEEP_PRE=1         
+SLEEP_MEM=2        
+CONTINUE_GAME=0         
+EXIT_GAME=1             
+          
+
 # F pour afficher le top 10 (utilisé en fin)
 show_top10() {
     echo -e "\n ***CLASSEMENT TOP 10***"
@@ -14,28 +24,28 @@ show_top10() {
 }
 
 # nombre de joueurs ?
-read -p "Bienvenue dans "SIMON". Combien de joueurs ? " nb_players
+read -p "Bienvenue dans "SIMON". Combien de joueurs ? " nb_players    #AMELIORATIONS / creation de tableau avec LISTE du noms des users 
 
-for (( i=1; i<=nb_players; i++ ))
+for (( i=1; i<=nb_players; i++ )) #commencer par i =0 et faire une equivalence entre la place dans le tableau et i=0
 do
     read -p "Pseudo du joueur $i : " player_name
     echo " Dear #$player_name, le jeu va commencer..."
-    sleep 1
+    sleep "$SLEEP_PRE"
 
     sequence=""
-    game_over=0
+    game_over=$CONTINUE_GAME
     score=0
 
-    while [ $game_over -eq 0 ]
+    while [ "$game_over" -eq "$CONTINUE_GAME" ]
     do
         # on va ajouter une lettre aléatoire parmi Q, S, D, F
         chars="QSDF"
         new_char=${chars:$(( RANDOM % 4 )):1}
-        sequence="$sequence$new_char"
+        sequence+=$new_char
 
         # la séquence
         echo -e "\nRetenez bien la sequence suivante : $sequence"
-        sleep 2
+        sleep $SLEEP_MEM
         clear 
 
         # la réponse
@@ -49,7 +59,7 @@ do
             echo "Bien joué !!! Score actuel : $score"
         else
             echo "GaMe OvEr !!! (>_<)"                                  
-            game_over=1
+            game_over=$EXIT_GAME
         fi
     done
 
@@ -67,3 +77,14 @@ do
     show_top10
 done
 
+
+
+#-------------- timer possibility 
+#timer =15;
+#seuil=0
+#while [ $timer -ge "seuil" ];do
+#seuil+=1
+#echo "$seuil"
+#sleep 1
+#et select a voir, mais c'est du high level
+#--------------
