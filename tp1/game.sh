@@ -87,7 +87,7 @@ for round in {1..5}; do
     echo -e "\n==================================="
     echo -e "          MANCHE $round / 5          "
     echo -e "==================================="
-    echo -e "⏳ \033[1mVous avez 120 secondes.\033[0m"
+    echo -e "\033[1mVous avez 120 secondes.\033[0m"
     echo ">> Chattez librement ou tapez 'coop' ou 'betray' :"
     
     rm -f /tmp/pdgame_local_choice /tmp/pdgame_remote_chose /tmp/pdgame_remote_choice
@@ -107,7 +107,7 @@ for round in {1..5}; do
         if [[ $REMAINING -le 60 && $N60 -eq 0 ]]; then echo -e "\r\033[K⏳ \033[33mRappel : Il reste 60 secondes.\033[0m"; N60=1; fi
         if [[ $REMAINING -le 30 && $N30 -eq 0 ]]; then echo -e "\r\033[K⏳ \033[31mRappel : Il reste 30 secondes !\033[0m"; N30=1; fi
         if [[ $REMAINING -le 10 && $REMAINING -gt 0 && $N10 -ne $REMAINING ]]; then 
-            echo -e "\r\033[K⏳ \033[31m$REMAINING...\033[0m"; N10=$REMAINING
+            echo -e "\r\033[K\033[31m$REMAINING...\033[0m"; N10=$REMAINING
         fi
         
         if [[ $REMAINING -le 0 ]]; then
@@ -130,7 +130,7 @@ for round in {1..5}; do
                 if [[ ! -f /tmp/pdgame_local_choice ]]; then
                     echo "$cmd_check" > /tmp/pdgame_local_choice
                     echo "CMD:CHOSE" >&3
-                    echo -e "\033[1A\033[K\033[32m[Système] Votre choix ('$cmd_check') est verrouillé 🔒\033[0m"
+                    echo -e "\033[1A\033[K\033[32m[Système] Votre choix ('$cmd_check') est verrouillé\033[0m"
                 else
                     echo -e "\033[1A\033[K\033[31m[Système] Vous avez déjà fait votre choix.\033[0m"
                 fi
@@ -159,7 +159,7 @@ for round in {1..5}; do
     HISTORY_ME[$round]=$my_choice
     HISTORY_THEM[$round]=$their_choice
     
-    echo -e "\033[32m[Système] Données chiffrées. Motus et bouche cousue ! 🤐\033[0m"
+    echo -e "\033[32m[Système] Données chiffrées. Motus et bouche cousue ! \033[0m"
     sleep 2
 done
 
@@ -183,16 +183,16 @@ for round in {1..5}; do
     
     if [[ "$m" == "coop" && "$t" == "coop" ]]; then
         ((SCORE_ME+=3)); ((SCORE_THEM+=3))
-        echo "🤝 Coopération mutuelle (+3 chacun)"
+        echo "Coopération mutuelle (+3 chacun)"
     elif [[ "$m" == "betray" && "$t" == "betray" ]]; then
         ((SCORE_ME+=1)); ((SCORE_THEM+=1))
-        echo "⚔️ Trahison mutuelle (+1 chacun)"
+        echo "Trahison mutuelle (+1 chacun)"
     elif [[ "$m" == "betray" && "$t" == "coop" ]]; then
         ((SCORE_ME+=5)); ((SCORE_THEM+=0))
-        echo "😈 Coup de maître ! (+5 pour vous)"
+        echo "Coup de maître ! (+5 pour vous)"
     elif [[ "$m" == "coop" && "$t" == "betray" ]]; then
         ((SCORE_ME+=0)); ((SCORE_THEM+=5))
-        echo "😭 Vous avez été trahi... (+5 pour l'adversaire)"
+        echo "Vous avez été trahi... (+5 pour l'adversaire)"
     fi
     sleep 2
 done
@@ -204,6 +204,6 @@ echo -e "\n==================================="
 echo -e "           SCORE FINAL             "
 echo -e "==================================="
 echo "Vous : $SCORE_ME | Adversaire : $SCORE_THEM"
-if [[ $SCORE_ME -gt $SCORE_THEM ]]; then echo -e "\033[32m🏆 FÉLICITATIONS, VOUS AVEZ GAGNÉ !\033[0m"
-elif [[ $SCORE_ME -lt $SCORE_THEM ]]; then echo -e "\033[31m💀 DOMMAGE, VOUS AVEZ PERDU !\033[0m"
+if [[ $SCORE_ME -gt $SCORE_THEM ]]; then echo -e "\033[32m FÉLICITATIONS, VOUS AVEZ GAGNÉ !\033[0m"
+elif [[ $SCORE_ME -lt $SCORE_THEM ]]; then echo -e "\033[31m DOMMAGE, VOUS AVEZ PERDU !\033[0m"
 else echo -e "\033[33m⚖️ ÉGALITÉ PARFAITE !\033[0m"; fi
