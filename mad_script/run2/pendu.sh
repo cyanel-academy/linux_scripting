@@ -1,67 +1,63 @@
-#!/bin/sh
+#!/bin/bash
 
-#Paramètres initiales
-
-SCORE_FILE="scores.txt"
-DEFAULT_WORDS="words.txt"
+# Paramètres initiaux
+SCORE_FILE=~/run2/scores.txt
+DEFAULT_WORDS=~/run2/words.txt
 MAX_ERRORS=6
 
-#Fonction
+# Fonction dessin pendu
 draw_pendu() {
-       local errors=$1
-       echo "  |------|"
-
-     #en cas d'erreur
-     if [$errors -ge 1 ]; then
-          echo " | o "
-     else
-          echo " | "
-     fi
-
-     #corps du pendu
-     if [ $errors -ge 4 ]; then
-     echo " | /|\ "
-     elif [ $errors -ge 3 ]; then
-          echo " | /| "
-     elif [$errors -ge 2 ]; then
-          echo " | | "
-     else
-          echo " | "
-     fi
-
-     #jambes du pendu
-     if [ $errors -ge 6 ]; then
-          echo " | /\ "
-     elif [ $errors -ge 5 ]; then
-          echo " | "
-     fi
-
-     echo " | "
-     echo " _|_ "
+                local errors=$1
+                echo "  |------|"
+                if [ $errors -ge 1 ]; then
+                    echo "  |      o"
+                else
+                    echo "  |"
+                fi
+                if [ $errors -ge 4 ]; then
+                    echo "  |     /|\ "
+                elif [ $errors -ge 3 ]; then
+                    echo "  |     /|"
+                elif [ $errors -ge 2 ]; then
+                    echo "  |      |"
+                else
+                    echo "  |"
+                fi
+                if [ $errors -ge 6 ]; then
+                    echo "  |     / \ "
+                elif [ $errors -ge 5 ]; then
+                    echo "  |     /"
+                else
+                    echo "  |"
+                fi
+                echo "  |"
+                echo " _|_"
 }
+
 
 # Fonction pour choisir un mot au hasard
 choose_word() {
-    word=$(sort -R $DEFAULT_WORDS | head -1) #sort mélange les lignes aléatoirement et head prend la première ligne
+    word=$(shuf -n 1 $DEFAULT_WORDS)
     echo $word
 }
-
+ 
+ 
 # Fonction pour afficher le mot masqué
 display_word() {
-    local word=$1
-    local found=$2
-    local display=""
-    for (( i=1; i<=${#word}; i++ )); do
-        local letter="${word:i-1:1}"
-        
-        if [[ $found == *"$letter"* ]]; then
-            display="$display $letter"
-        else
-            display="$display _"
-        fi
-    done
-    echo $display
+        local word=$1
+        local found=$2
+        local display=""
+        for (( i=1; i<=${#word}; i++ )); do
+            local letter="${word:i-1:1}"
+            if [[ $found == *"$letter"* ]]; then
+                display="$display $letter"
+            else
+                display="$display _"
+            fi
+        done
+        echo $display
 }
+
 
 # Fonction principale du jeu
 play_game() {
@@ -116,37 +112,78 @@ play_game() {
     fi
     echo "Score: $score points"
     echo ""
+    update_score "$player" "$score"
+    show_top10
 }
 
+# Fonction pour mettre à jour le top 10
+update_score() {
+    local player=$1
+    local score=$2
+
+    if [ ! -f "$SCORE_FILE" ]; then
+        touch "$SCORE_FILE"
+    fi
+
+    if grep -q "^$player:" "$SCORE_FILE"; then
+        old_score=$(grep "^$player:" "$SCORE_FILE" | cut -d':' -f2)
+        new_score=$((old_score + $score))
+        sed -i "s/$player:.*/$player:$new_score/" "$SCORE_FILE"
+    else
+        echo "$player:$score" >> "$SCORE_FILE"
+    fi
+
+    sort -t':' -k2 -rn "$SCORE_FILE" | head -10 > tmp_score.txt
+    mv tmp_score.txt "$SCORE_FILE"
+}
+
+# Fonction pour afficher le top 10
+show_top10() {
+    echo ""
+    echo "~~~~~~~~~~~~~~ TOP 10 ~~~~~~~~~~~"
+    echo ""
+    if [ ! -f "$SCORE_FILE" ] || [ ! -s "$SCORE_FILE" ]; then
+        echo "Pas encore de scores"
+    else
+        local rank=1
+        while IFS=':' read -r name score; do
+            printf "%-3s %-15s %10s points\n" "$rank." "$name" "$score"
+            rank=$((rank + 1))
+        done < "$SCORE_FILE"
+    fi
+    echo ""
+    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    echo ""
+}
+
+# Gestion des arguments et lancement du jeu
 main() {
-     local nb_players=""
+    local nb_players=""
 
-     while  getopts "p:w:" option; do  
-          case $option in
-          p) nb_players=$OPTARG ;;
-          w)DEFAULT_WORDS=$OPTARG ;;
-          ?)
-             echo "Usage: ./pendu.sh -p [nb_joueurs] -w [fichier_mots]"
-             exit 1 ;;
-          esac
-     done
+    while getopts "p:w:" option; do
+        case $option in
+            p) nb_players=$OPTARG ;;
+            w) DEFAULT_WORDS=$OPTARG ;;
+            ?)
+                echo "Usage: ./pendu.sh -p [nb_joueurs] -w [fichier_mots]"
+                exit 1 ;;
+        esac
+    done
 
-     if [ -z "$nb_players" ]; then  
+    if [ -z "$nb_players" ]; then
         read -p "Combien de joueurs ? " nb_players
-     fi
+    fi
 
-     #Pour demander le nom de chaque joueur et stocker
-     local players=()
-     for ((i=1; i<=nb_players;i++)); do
-         read -p "Nom du joueur $i : " name
-         players+=("$name")
-     done
+    local players=()
+    for ((i=1; i<=nb_players; i++)); do
+        read -p "Nom du joueur $i : " name
+        players+=("$name")
+    done
 
-     #Pour faire jouer chaque participant
-     for player in "${players[@]}"; do
-         play_game "$player"
-     done
+    for player in "${players[@]}"; do
+        play_game "$player"
+    done
 }
 
-#lancer le programme en passant par tous les arguments
-#main "$@"
+# Lancer le programme
+main "$@"
